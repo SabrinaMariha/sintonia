@@ -3,8 +3,98 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegisterActivity">
+    android:background="@color/material_dynamic_neutral0"
+    tools:context=".activities.RegisterActivity">
 
+    <EditText
+        android:id="@+id/Input_username"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/bg_edittext"
+        android:ems="10"
+        android:hint="Nome"
+        android:inputType="text"
+        android:textColor="@color/white"
+        android:textColorHint="@color/cinzaClaro"
+        app:layout_constraintEnd_toEndOf="@+id/lbl_nome_contato"
+        app:layout_constraintStart_toStartOf="@+id/lbl_nome_contato"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_nome_contato" />
+
+    <EditText
+        android:id="@+id/Input_codigo"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_edittext"
+        android:ems="10"
+        android:hint="E-mail"
+        android:inputType="textEmailAddress"
+        android:textColor="@color/white"
+        android:textColorHint="@color/cinzaClaro"
+        app:layout_constraintEnd_toEndOf="@+id/Input_username"
+        app:layout_constraintStart_toStartOf="@+id/Input_username"
+        app:layout_constraintTop_toBottomOf="@+id/Input_username" />
+
+    <EditText
+        android:id="@+id/Input_seu_codigo"
+        android:layout_width="377dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_edittext"
+        android:ems="10"
+        android:hint="Senha"
+        android:inputType="textPassword"
+        android:textColor="@color/white"
+        android:textColorHint="@color/cinzaClaro"
+        app:layout_constraintEnd_toEndOf="@+id/Input_codigo"
+        app:layout_constraintStart_toStartOf="@+id/Input_codigo"
+        app:layout_constraintTop_toBottomOf="@+id/Input_codigo" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_cadastrar"
+        style="@style/CustomMaterialButton"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/bg_home"
+        android:text="@string/insert"
+        android:textColor="@color/white"
+        app:backgroundTint="@null"
+        app:cornerRadius="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/Input_seu_codigo"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/Input_seu_codigo"
+        app:layout_constraintTop_toBottomOf="@+id/Input_seu_codigo" />
+
+
+    <TextView
+        android:id="@+id/lbl_nome_contato"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:text="Cadastro"
+        style="@style/Quicksand.Bold"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/btn_voltar_game"
+        app:layout_constraintTop_toBottomOf="@+id/btn_voltar_game" />
+
+    <ImageButton
+        android:id="@+id/btn_voltar_game"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/down_left_1"
+        android:text=""
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

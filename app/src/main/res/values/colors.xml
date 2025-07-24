@@ -2,9 +2,20 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="rosaEletrico">#FD297B</color>
-    <color name="rosa">#FF5864</color>
-    <color name="salmao">#FF655B</color>
+    <color name="rosaBotao">#E02E3E</color>
+    <color name="rosaEletrico">#C20853</color>
+    <color name="rosa">#E02E3D</color>
+    <color name="salmao">#FF5328</color>
     <color name="cinza">#363535</color>
     <color name="cinzaClaro">#98AABA</color>
+    <color name="avatar_color_1">#FD297B</color>  <!-- rosa elétrico (cor principal do app) -->
+    <color name="avatar_color_2">#FF5864</color>  <!-- rosa suave (combina com rosaEletrico) -->
+    <color name="avatar_color_3">#FF655B</color>  <!-- salmão -->
+    <color name="avatar_color_4">#363535</color>  <!-- cinza escuro -->
+    <color name="avatar_color_5">#7E4A84</color>  <!-- roxo suave, para dar variação (harmonia com rosa) -->
+    <color name="avatar_color_6">#B35A4A</color>  <!-- tom terroso suave, próximo do salmão, para variação -->
+    <color name="avatar_color_7">#E03E6F</color>  <!-- rosa médio, um pouco mais escuro que o rosaEletrico -->
+    <color name="avatar_color_8">#A54F61</color>  <!-- bordô discreto, combina com o rosa -->
+
+
 </resources>

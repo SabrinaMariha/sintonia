@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Sintonia</string>
     <string name="enter">Entrar</string>
-    <string name="signIn">Não tem uma conta? crie aqui!</string>
+    <string name="signIn">Não possui uma conta? cadastre-se aqui!</string>
+    <string name="insert">Cadastrar</string>
 </resources>

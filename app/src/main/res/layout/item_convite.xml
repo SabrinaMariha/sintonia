@@ -1,0 +1,66 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <!-- TextView -->
+    <TextView
+        android:id="@+id/textViewNome"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Nome da Pessoa"
+        style="@style/Quicksand.Bold"
+        android:textColor="#E6FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Botão Aceitar -->
+
+    <!-- Botão Recusar -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_aceitar"
+        android:layout_width="121dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/bg_btn_agree"
+        android:text="ACEITAR"
+        style="@style/CustomMaterialButton"
+        android:textColor="@color/white"
+        app:backgroundTint="@null"
+        app:cornerRadius="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/btn_recusar"
+        app:layout_constraintTop_toBottomOf="@+id/textViewNome" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_recusar"
+        android:layout_width="127dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/bg_btn_decline"
+        android:text="RECUSAR"
+        style="@style/CustomMaterialButton"
+
+        android:textColor="@color/white"
+        app:backgroundTint="@null"
+        app:cornerRadius="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewNome" />
+
+    <!-- Linha branca de separação -->
+    <View
+        android:id="@+id/separador"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_recusar" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

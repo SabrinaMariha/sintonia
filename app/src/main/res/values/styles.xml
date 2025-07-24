@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Quicksand.Bold">
+        <item name="fontFamily">@font/quicksand_bold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Quicksand.Light">
+        <item name="fontFamily">@font/quicksand_light</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Quicksand.Medium">
+        <item name="fontFamily">@font/quicksand_medium</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Quicksand">
+        <item name="fontFamily">@font/quicksand_regular</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Quicksand.SemiBold">
+        <item name="fontFamily">@font/quicksand_semibold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="CustomMaterialButton" parent="Widget.MaterialComponents.Button">
+        <item name="fontFamily">@font/quicksand_semibold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+</resources>
+

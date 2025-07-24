@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/material_dynamic_neutral0"
+    tools:context=".activities.MainActivity">
+
+    <EditText
+        android:id="@+id/Input_codigo"
+        style="@style/Quicksand.Bold"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/bg_edittext"
+        android:ems="10"
+        android:hint="CÓDIGO"
+        android:inputType="text"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/lbl_nome_contato"
+        app:layout_constraintStart_toStartOf="@+id/lbl_nome_contato"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_conexao_descricao" />
+
+
+    <EditText
+        android:id="@+id/Input_seu_codigo"
+        style="@style/Quicksand.Bold"
+        android:layout_width="377dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/bg_edittext"
+        android:ems="10"
+        android:enabled="false"
+        android:inputType="text"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textColorHint="@color/cinzaClaro"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/Input_codigo"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/Input_codigo"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_seu_codigo" />
+
+    <TextView
+        android:id="@+id/lbl_nome_contato"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="42dp"
+        android:layout_marginEnd="16dp"
+        android:text="ADD UM AMIGO"
+        style="@style/Quicksand.Bold"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_voltar" />
+
+    <ImageButton
+        android:id="@+id/btn_voltar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/down_left_1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/btn_config"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="configuracao"
+        android:src="@drawable/gear_1"
+        android:text="Button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/lbl_conexao_descricao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Entre com o código do seu amigo aqui"
+        style="@style/Quicksand"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="@+id/lbl_nome_contato"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_nome_contato" />
+
+    <TextView
+        android:id="@+id/lbl_seu_codigo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:text="Seu código para convite é"
+        style="@style/Quicksand"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/Input_codigo"
+        app:layout_constraintTop_toBottomOf="@+id/btn_convidar" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_convidar"
+        style="@style/CustomMaterialButton"
+        android:layout_width="233dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/bg_home"
+        android:text="Enviar convite"
+        android:textColor="@color/white"
+        app:backgroundTint="@null"
+        app:cornerRadius="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Input_codigo" />
+
+    <Button
+        android:id="@+id/btn_convites_recebidos"
+        android:layout_width="233dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="52dp"
+        android:background="@drawable/bg_home"
+        android:text="VER CONVITES"
+        style="@style/CustomMaterialButton"
+        android:textColor="@color/white"
+        app:backgroundTint="@null"
+        app:cornerRadius="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/Input_seu_codigo"
+        app:layout_constraintStart_toStartOf="@+id/Input_seu_codigo"
+        app:layout_constraintTop_toBottomOf="@+id/Input_seu_codigo" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="16dp"
+        android:text="Porque não compartilhar seu perfil Sintonia em seu perfil Tinder?.."
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/Input_seu_codigo"
+        app:layout_constraintStart_toStartOf="@+id/Input_seu_codigo"
+        app:layout_constraintTop_toBottomOf="@+id/btn_convites_recebidos" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
