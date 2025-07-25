@@ -26,6 +26,9 @@ public class Carta {
         return descricao;
     }
 
+    public void setCriadorId(String criadorId){
+        this.criadorId = criadorId;
+    }
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }

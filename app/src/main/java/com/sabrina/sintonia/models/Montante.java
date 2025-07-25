@@ -7,49 +7,44 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Montante {
-    private  String id;
+    private String id;
     private List<Carta> cartas;
 
-
     public Montante() {
-        cartas = new ArrayList<>();
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        db.collection("cartas")
-                .whereEqualTo("criador", "padrao")
-                .get()
-                .addOnSuccessListener(querySnapshot -> {
-                    for (DocumentSnapshot document : querySnapshot.getDocuments()) {
-                        String id = document.getId();
-                        String criadorId = document.getString("criador");
-                        String descricao = document.getString("descricao");
-
-                        Carta carta = new Carta(criadorId, descricao);
-                        carta.setId(id); // atribui o id do documento à carta
-                        cartas.add(carta);
-                    }
-
-                    System.out.println("Cartas carregadas: " + cartas.size());
-                })
-                .addOnFailureListener(e -> {
-                    System.err.println("Erro ao buscar cartas: " + e.getMessage());
-                });
+        this.cartas = new ArrayList<>();
     }
 
-    public String getId() {
-        return id;
+    public Montante(List<Carta> cartas) {
+        this.cartas = cartas;
     }
-    public void setId(String id) {
-        this.id = id;
-    }
-
 
     public List<Carta> getCartas() {
         return cartas;
     }
 
-    public void setCartas(List<Carta> cartas) {
-        this.cartas = cartas;
+    // Método estático para carregar cartas padrão de forma assíncrona
+    public static void carregarCartasPadrao(OnCartasCarregadasListener listener) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("cartas")
+                .whereEqualTo("criador", "padrao")
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    List<Carta> cartasCarregadas = new ArrayList<>();
+                    for (DocumentSnapshot doc : querySnapshot.getDocuments()) {
+                        Carta carta = doc.toObject(Carta.class);
+                        carta.setId(doc.getId());
+                        cartasCarregadas.add(carta);
+                    }
+                    listener.onCartasCarregadas(cartasCarregadas);
+                })
+                .addOnFailureListener(e -> {
+                    listener.onFalha(e);
+                });
+    }
+
+    public interface OnCartasCarregadasListener {
+        void onCartasCarregadas(List<Carta> cartas);
+        void onFalha(Exception e);
     }
 }
+

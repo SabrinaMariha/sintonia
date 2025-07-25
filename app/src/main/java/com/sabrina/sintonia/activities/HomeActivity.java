@@ -2,6 +2,7 @@ package com.sabrina.sintonia.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.Toast;
@@ -171,6 +172,7 @@ private void abrirDialogAdicionarAmigo() {
         Intent intent = new Intent(this, GameActivity.class);
         intent.putExtra("NOME_CONTATO", usuario.getUserName());
         intent.putExtra("CONEXAO_ID", conexaoId);
+        Log.d("GameActivity", "conexaoId: " + conexaoId);
         intent.putExtra("UID_UM", meuUid);
         intent.putExtra("UID_DOIS", outroUid);
         startActivity(intent);

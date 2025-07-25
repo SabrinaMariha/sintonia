@@ -2,7 +2,12 @@ package com.sabrina.sintonia.activities;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,12 +63,8 @@ public class GameActivity extends AppCompatActivity {
         });
 
         imgVoltar = findViewById(R.id.btn_voltar_game);
-        imgVoltar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Redirect.changeScreen(GameActivity.this, HomeActivity.class);
-            }
-        });
+        imgVoltar.setOnClickListener(v -> Redirect.changeScreen(GameActivity.this, HomeActivity.class));
+
         btnConfig = findViewById(R.id.btn_config);
         btnConfig.setOnClickListener(view -> {
             PopupMenu popupMenu = new PopupMenu(GameActivity.this, btnConfig);
@@ -88,8 +89,14 @@ public class GameActivity extends AppCompatActivity {
         editNomeContato = findViewById(R.id.lbl_nome_contato);
         String nomeContato = getIntent().getStringExtra("NOME_CONTATO");
         conexaoId = getIntent().getStringExtra("CONEXAO_ID");
-        meuUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         outroUid = getIntent().getStringExtra("UID_DOIS");
+
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            Redirect.verifyAuthentication(GameActivity.this, HomeActivity.class);
+            return;
+        }
+
+        meuUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         if (nomeContato != null) {
             editNomeContato.setText(nomeContato);
@@ -98,21 +105,27 @@ public class GameActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerViewCartas);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        FirebaseFirestore.getInstance().collection("cartas")
-                .whereEqualTo("criador", "padrao")
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("interacoes")
+                .document(conexaoId)
+                .collection("cartas")
                 .get()
                 .addOnSuccessListener(snapshot -> {
+                    List<String> cartasJaVistas = new ArrayList<>();
                     for (DocumentSnapshot doc : snapshot) {
-                        Carta carta = doc.toObject(Carta.class);
-                        if (carta != null) {
-                            carta.setId(doc.getId());
-                            listaCartas.add(carta);
+                        if (doc.contains(meuUid)) {
+                            cartasJaVistas.add(doc.getId());
                         }
                     }
-                    cartaAdapter = new CartaAdapter(listaCartas);
-                    recyclerView.setAdapter(cartaAdapter);
+                    carregarMontanteFiltrado(cartasJaVistas);
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Erro ao buscar interações", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
                 });
 
+        // Swipe (like/dislike)
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
@@ -142,7 +155,6 @@ public class GameActivity extends AppCompatActivity {
                             if (gostou) {
                                 Toast.makeText(getApplicationContext(), "Like!", Toast.LENGTH_SHORT).show();
 
-                                // Aguarda o merge concluir antes de verificar o match
                                 interacaoRef.get().addOnSuccessListener(doc -> {
                                     Map<String, Object> data = doc.getData();
                                     if (data != null) {
@@ -159,6 +171,37 @@ public class GameActivity extends AppCompatActivity {
                                                             "timestamp", System.currentTimeMillis()
                                                     ));
 
+                                            View fundoEscuro = findViewById(R.id.fundo_escuro);
+                                            LinearLayout matchContainer = findViewById(R.id.match_container);
+                                            ImageView heart = findViewById(R.id.heart_match);
+                                            TextView textMatch = findViewById(R.id.text_match);
+
+                                            fundoEscuro.setVisibility(View.VISIBLE);
+                                            matchContainer.setVisibility(View.VISIBLE);
+
+                                            ScaleAnimation scaleHeart = new ScaleAnimation(
+                                                    0f, 1.5f, 0f, 1.5f,
+                                                    Animation.RELATIVE_TO_SELF, 0.5f,
+                                                    Animation.RELATIVE_TO_SELF, 0.5f);
+                                            scaleHeart.setDuration(500);
+                                            scaleHeart.setFillAfter(true);
+
+                                            AlphaAnimation fadeInText = new AlphaAnimation(0.0f, 1.0f);
+                                            fadeInText.setDuration(500);
+                                            fadeInText.setStartOffset(300);
+
+                                            heart.startAnimation(scaleHeart);
+                                            textMatch.startAnimation(fadeInText);
+                                            recyclerView.setVisibility(View.INVISIBLE);
+
+                                            new android.os.Handler().postDelayed(() -> {
+                                                heart.clearAnimation();
+                                                textMatch.clearAnimation();
+                                                matchContainer.setVisibility(View.GONE);
+                                                fundoEscuro.setVisibility(View.GONE);
+                                                recyclerView.setVisibility(View.VISIBLE);
+                                            }, 2000);
+
                                             Toast.makeText(getApplicationContext(), "✨ MATCH! ✨", Toast.LENGTH_LONG).show();
                                         }
                                     }
@@ -173,5 +216,47 @@ public class GameActivity extends AppCompatActivity {
         };
 
         new ItemTouchHelper(simpleCallback).attachToRecyclerView(recyclerView);
+    }
+
+    private void carregarMontanteFiltrado(List<String> cartasJaVistas) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("conexoes")
+                .document(conexaoId)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        listaCartas.clear();
+
+                        Map<String, Object> montanteMap = (Map<String, Object>) documentSnapshot.get("montante");
+                        if (montanteMap != null) {
+                            List<Map<String, Object>> cartasMap = (List<Map<String, Object>>) montanteMap.get("cartas");
+                            if (cartasMap != null) {
+                                for (Map<String, Object> cartaMap : cartasMap) {
+                                    String cartaId = (String) cartaMap.get("id");
+
+                                    if (!cartasJaVistas.contains(cartaId)
+                                            && cartaMap.get("descricao") != null) {
+
+                                        Carta carta = new Carta();
+                                        carta.setId(cartaId);
+                                        carta.setDescricao((String) cartaMap.get("descricao"));
+                                        carta.setCriadorId((String) cartaMap.get("criadorId"));
+                                        listaCartas.add(carta);
+                                    }
+
+                                }
+                            }
+                        }
+
+                        cartaAdapter = new CartaAdapter(listaCartas);
+                        recyclerView.setAdapter(cartaAdapter);
+                    } else {
+                        Toast.makeText(this, "Conexão não encontrada", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Erro ao carregar cartas", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                });
     }
 }

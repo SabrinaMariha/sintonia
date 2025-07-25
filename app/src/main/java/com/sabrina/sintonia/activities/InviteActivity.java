@@ -3,7 +3,6 @@ package com.sabrina.sintonia.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.Toast;
@@ -19,12 +18,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.sabrina.sintonia.ConexaoAdapter;
 import com.sabrina.sintonia.ConviteAdapter;
 import com.sabrina.sintonia.R;
 import com.sabrina.sintonia.Redirect;
 import com.sabrina.sintonia.models.Conexao;
 import com.sabrina.sintonia.models.Convite;
+import com.sabrina.sintonia.models.Montante;
+import com.sabrina.sintonia.models.Carta;
 import com.sabrina.sintonia.models.Usuario;
 
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ import java.util.List;
 public class InviteActivity extends AppCompatActivity implements ConviteAdapter.OnConviteClickListener {
     private RecyclerView recyclerView;
     private ConviteAdapter adapter;
-    private List<Convite> listaConvites = new ArrayList<>();
+    private final List<Convite> listaConvites = new ArrayList<>();
     private FirebaseFirestore db;
     private String meuUid;
     private ImageButton imgVoltar;
@@ -44,16 +44,16 @@ public class InviteActivity extends AppCompatActivity implements ConviteAdapter.
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.act_invite);
+
+        // Ajuste dos Insets para evitar que conteúdo fique atrás da status bar / navigation bar
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-
         recyclerView = findViewById(R.id.recyclerViewConvites);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
         adapter = new ConviteAdapter(listaConvites, this);
         recyclerView.setAdapter(adapter);
 
@@ -61,11 +61,11 @@ public class InviteActivity extends AppCompatActivity implements ConviteAdapter.
         db = FirebaseFirestore.getInstance();
 
         carregarConvites();
+
         btnConfig = findViewById(R.id.btn_config);
         btnConfig.setOnClickListener(view -> {
             PopupMenu popupMenu = new PopupMenu(InviteActivity.this, btnConfig);
             popupMenu.getMenuInflater().inflate(R.menu.menu_config, popupMenu.getMenu());
-
             popupMenu.setOnMenuItemClickListener(item -> {
                 int id = item.getItemId();
                 if (id == R.id.menu_perfil) {
@@ -78,19 +78,16 @@ public class InviteActivity extends AppCompatActivity implements ConviteAdapter.
                 }
                 return false;
             });
-
             popupMenu.show();
         });
-        imgVoltar = findViewById(R.id.btn_voltar);
-        imgVoltar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent (InviteActivity.this, ConectionActivity.class);
-                startActivity(intent);
-            }
-        });
 
+        imgVoltar = findViewById(R.id.btn_voltar);
+        imgVoltar.setOnClickListener(v -> {
+            Intent intent = new Intent(InviteActivity.this, ConectionActivity.class);
+            startActivity(intent);
+        });
     }
+
     @Override
     public void onAceitarClick(Convite convite) {
         db.collection("convites")
@@ -98,56 +95,55 @@ public class InviteActivity extends AppCompatActivity implements ConviteAdapter.
                 .update("status", "aceito")
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(this, "Convite aceito!", Toast.LENGTH_SHORT).show();
-                    saveConnectionUsers(convite); // <-- Aqui passa o convite
+                    saveConnectionUsers(convite);
                 })
                 .addOnFailureListener(e ->
                         Toast.makeText(this, "Erro ao aceitar convite", Toast.LENGTH_SHORT).show());
         carregarConvites();
-
     }
 
-
     private void saveConnectionUsers(Convite convite) {
-        String uidRemetente = convite.getRemetente().getUuid(); // usuário que enviou o convite
+        String uidRemetente = convite.getRemetente().getUuid();
 
-        FirebaseFirestore.getInstance()
-                .collection("users")
-                .document(meuUid)
-                .get()
+        db.collection("users").document(meuUid).get()
                 .addOnSuccessListener(documentSnapshotMeu -> {
                     Usuario usuarioUm = documentSnapshotMeu.toObject(Usuario.class);
 
-                    FirebaseFirestore.getInstance()
-                            .collection("users")
-                            .document(uidRemetente)
-                            .get()
+                    db.collection("users").document(uidRemetente).get()
                             .addOnSuccessListener(documentSnapshotRemetente -> {
                                 Usuario usuarioDois = documentSnapshotRemetente.toObject(Usuario.class);
 
-                                // Cria o objeto de conexão
-                                Conexao conexao = new Conexao(usuarioUm, usuarioDois);
+                                Montante.carregarCartasPadrao(new Montante.OnCartasCarregadasListener() {
+                                    @Override
+                                    public void onCartasCarregadas(List<Carta> cartas) {
+                                        Montante montante = new Montante(cartas);
+                                        Conexao conexao = new Conexao(usuarioUm, usuarioDois);
+                                        conexao.setMontante(montante);
+                                        String conexaoId;
+                                        if (usuarioUm.getUuid().compareTo(usuarioDois.getUuid()) < 0) {
+                                            conexaoId = usuarioUm.getUuid() + "_" + usuarioDois.getUuid();
+                                        } else {
+                                            conexaoId = usuarioDois.getUuid() + "_" + usuarioUm.getUuid();
+                                        }
+                                        db.collection("conexoes")
+                                                .document(conexaoId) // <-- define o ID customizado
+                                                .set(conexao)        // <-- envia o objeto Conexao
+                                                .addOnSuccessListener(unused -> Log.i("InviteActivity", "Conexão salva com cartas padrão com sucesso!"))
+                                                .addOnFailureListener(e -> Log.e("InviteActivity", "Erro ao salvar conexão: " + e.getMessage()));
+                                        conexao.setId(conexaoId);
+                                    }
 
-                                FirebaseFirestore.getInstance()
-                                        .collection("conexoes")
-                                        .add(conexao)
-                                        .addOnSuccessListener(unused -> {
-                                            Log.i("Teste", "Conexão salva com sucesso!");
-                                        })
-                                        .addOnFailureListener(e -> {
-                                            Log.e("Teste", "Erro ao salvar conexão: " + e.getMessage());
-                                        });
-
+                                    @Override
+                                    public void onFalha(Exception e) {
+                                        Log.e("InviteActivity", "Erro ao carregar cartas padrão: " + e.getMessage());
+                                        // Opcional: tratar falha, ex: salvar conexão sem cartas ou avisar o usuário
+                                    }
+                                });
                             })
-                            .addOnFailureListener(e -> {
-                                Log.e("Teste", "Erro ao buscar remetente: " + e.getMessage());
-                            });
-
+                            .addOnFailureListener(e -> Log.e("InviteActivity", "Erro ao buscar remetente: " + e.getMessage()));
                 })
-                .addOnFailureListener(e -> {
-                    Log.e("Teste", "Erro ao buscar usuário logado: " + e.getMessage());
-                });
+                .addOnFailureListener(e -> Log.e("InviteActivity", "Erro ao buscar usuário logado: " + e.getMessage()));
     }
-
 
     @Override
     public void onRecusarClick(Convite convite) {
@@ -157,7 +153,7 @@ public class InviteActivity extends AppCompatActivity implements ConviteAdapter.
                 .addOnSuccessListener(aVoid ->
                         Toast.makeText(this, "Convite recusado!", Toast.LENGTH_SHORT).show())
                 .addOnFailureListener(e ->
-                    Toast.makeText(this, "Erro ao recusar convite", Toast.LENGTH_SHORT).show());
+                        Toast.makeText(this, "Erro ao recusar convite", Toast.LENGTH_SHORT).show());
         carregarConvites();
     }
 
@@ -165,7 +161,7 @@ public class InviteActivity extends AppCompatActivity implements ConviteAdapter.
         listaConvites.clear();
 
         db.collection("convites")
-                .whereEqualTo("destinatario.uuid", meuUid) // agora é um objeto
+                .whereEqualTo("destinatario.uuid", meuUid)
                 .whereEqualTo("status", "pendente")
                 .get()
                 .addOnSuccessListener(snapshot -> {
@@ -176,9 +172,7 @@ public class InviteActivity extends AppCompatActivity implements ConviteAdapter.
                     }
                     adapter.notifyDataSetChanged();
                 })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(this, "Erro ao carregar convites", Toast.LENGTH_SHORT).show();
-                });
+                .addOnFailureListener(e ->
+                        Toast.makeText(this, "Erro ao carregar convites", Toast.LENGTH_SHORT).show());
     }
-
 }
