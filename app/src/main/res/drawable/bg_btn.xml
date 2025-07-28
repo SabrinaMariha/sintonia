@@ -5,11 +5,12 @@
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
             <gradient
-                android:angle="0"
-                android:startColor="@color/salmao"
-                android:centerColor="@color/salmao"
-                android:endColor="@color/rosaEletrico"
-                android:type="linear" />
+                android:angle="180"
+                android:startColor="#FF5328"
+                android:centerColor="#E02E3D"
+                android:endColor="#C20853"
+                android:type="linear"
+                android:useLevel="false" />
             <corners android:radius="20dp" />
         </shape>
     </item>
@@ -18,11 +19,12 @@
     <item>
         <shape android:shape="rectangle">
             <gradient
-                android:angle="0"
-                android:startColor="@color/salmao"
-                android:centerColor="@color/salmao"
-                android:endColor="@color/rosaEletrico"
-                android:type="linear" />
+                android:angle="180"
+                android:startColor="#FF5328"
+                android:centerColor="#E02E3D"
+                android:endColor="#C20853"
+                android:type="linear"
+                android:useLevel="false" />
             <corners android:radius="20dp" />
         </shape>
     </item>

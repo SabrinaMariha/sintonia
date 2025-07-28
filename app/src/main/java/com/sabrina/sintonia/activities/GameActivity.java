@@ -1,5 +1,6 @@
 package com.sabrina.sintonia.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -47,7 +48,8 @@ public class GameActivity extends AppCompatActivity {
     private String conexaoId;
     private String meuUid;
     private String outroUid;
-
+    private String nomeContato;
+   private ImageButton btnOpcoes;
     private List<Carta> listaCartas = new ArrayList<>();
 
     @Override
@@ -61,6 +63,35 @@ public class GameActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        btnOpcoes = findViewById(R.id.btn_opcoes);
+        btnOpcoes.setOnClickListener(view -> {
+            PopupMenu popupMenu = new PopupMenu(GameActivity.this, btnOpcoes);
+            popupMenu.getMenuInflater().inflate(R.menu.menu_opcoes, popupMenu.getMenu());
+
+            popupMenu.setOnMenuItemClickListener(item -> {
+                int id = item.getItemId();
+                if (id == R.id.menu_adicionar_carta) {
+                    Intent intent = new Intent(GameActivity.this, NovaCartaActivity.class);
+                    intent.putExtra("CONEXAO_ID", conexaoId);
+                    intent.putExtra("UID_DOIS", outroUid);
+                    intent.putExtra("NOME_CONTATO", nomeContato);
+                    startActivity(intent);
+                    return true;
+                } else if (id == R.id.menu_ver_matches) {
+                    Intent intent = new Intent(GameActivity.this, MatchesActivity.class);
+                    intent.putExtra("CONEXAO_ID", conexaoId);
+                    intent.putExtra("UID_DOIS", outroUid);
+                    intent.putExtra("NOME_CONTATO", nomeContato);
+                    startActivity(intent);
+                    return true;
+                }
+                return false;
+            });
+
+            popupMenu.show();
+        });
+
 
         imgVoltar = findViewById(R.id.btn_voltar_game);
         imgVoltar.setOnClickListener(v -> Redirect.changeScreen(GameActivity.this, HomeActivity.class));
@@ -87,7 +118,7 @@ public class GameActivity extends AppCompatActivity {
         });
 
         editNomeContato = findViewById(R.id.lbl_nome_contato);
-        String nomeContato = getIntent().getStringExtra("NOME_CONTATO");
+        nomeContato = getIntent().getStringExtra("NOME_CONTATO");
         conexaoId = getIntent().getStringExtra("CONEXAO_ID");
         outroUid = getIntent().getStringExtra("UID_DOIS");
 
@@ -103,7 +134,10 @@ public class GameActivity extends AppCompatActivity {
         }
 
         recyclerView = findViewById(R.id.recyclerViewCartas);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+
+        recyclerView.setOverScrollMode(View.OVER_SCROLL_NEVER); // remove bounce visual
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -211,7 +245,8 @@ public class GameActivity extends AppCompatActivity {
                             }
                         });
 
-                cartaAdapter.removeItem(position);
+                cartaAdapter.removeItem(0);
+                cartaAdapter.notifyDataSetChanged();
             }
         };
 
@@ -248,7 +283,7 @@ public class GameActivity extends AppCompatActivity {
                             }
                         }
 
-                        cartaAdapter = new CartaAdapter(listaCartas);
+                        cartaAdapter = new CartaAdapter(listaCartas, conexaoId, outroUid, nomeContato);
                         recyclerView.setAdapter(cartaAdapter);
                     } else {
                         Toast.makeText(this, "Conexão não encontrada", Toast.LENGTH_SHORT).show();

@@ -1,5 +1,6 @@
 package com.sabrina.sintonia;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
@@ -16,6 +17,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.sabrina.sintonia.activities.GameActivity;
+import com.sabrina.sintonia.activities.MatchesActivity;
+import com.sabrina.sintonia.activities.NovaCartaActivity;
 import com.sabrina.sintonia.models.Carta;
 
 import java.util.List;
@@ -23,11 +27,16 @@ import java.util.List;
 public class CartaAdapter extends RecyclerView.Adapter<CartaAdapter.CartaViewHolder> {
 
     private List<Carta> cartas;
+    private String conexaoId;
+    private String uidDois;
+    private String nomeContato;
 
-    public CartaAdapter(List<Carta> cartas) {
+    public CartaAdapter(List<Carta> cartas, String conexaoId, String uidDois, String nomeContato) {
         this.cartas = cartas;
+        this.conexaoId = conexaoId;
+        this.uidDois = uidDois;
+        this.nomeContato = nomeContato;
     }
-
     @NonNull
     @Override
     public CartaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -41,23 +50,6 @@ public class CartaAdapter extends RecyclerView.Adapter<CartaAdapter.CartaViewHol
         Carta carta = cartas.get(position);
         holder.textDescricao.setText(carta.getDescricao());
         // Aqui o clique no botão opções dentro de cada carta:
-        holder.opcoes.setOnClickListener(view -> {
-            PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
-            popupMenu.getMenuInflater().inflate(R.menu.menu_opcoes, popupMenu.getMenu());
-
-            popupMenu.setOnMenuItemClickListener(item -> {
-                int id = item.getItemId();
-                if (id == R.id.menu_adicionar_carta) {
-                    Toast.makeText(view.getContext(), "Adicionar nova carta selecionado", Toast.LENGTH_SHORT).show();
-                    return true;
-                } else if (id == R.id.menu_ver_matches) {
-                    Toast.makeText(view.getContext(), "Ver matches selecionado", Toast.LENGTH_SHORT).show();
-                    return true;
-                }
-                return false;
-            });
-            popupMenu.show();
-        });
 
         // Aplica o gradiente depois que a view for desenhada
         holder.textDescricao.getViewTreeObserver().addOnGlobalLayoutListener(
@@ -84,23 +76,21 @@ public class CartaAdapter extends RecyclerView.Adapter<CartaAdapter.CartaViewHol
         );
     }
 
-    @Override
-    public int getItemCount() {
-        return cartas.size();
-    }
 
     public void removeItem(int position) {
         cartas.remove(position);
         notifyItemRemoved(position);
     }
+    @Override
+    public int getItemCount() {
+        return Math.min(cartas.size(), 1); // só exibe UMA carta por vez
+    }
 
     static class CartaViewHolder extends RecyclerView.ViewHolder {
         TextView textDescricao;
-        ImageView opcoes;
         public CartaViewHolder(@NonNull View itemView) {
             super(itemView);
             textDescricao = itemView.findViewById(R.id.text_descricao);
-            opcoes = itemView.findViewById(R.id.opcoes);
         }
     }
 }

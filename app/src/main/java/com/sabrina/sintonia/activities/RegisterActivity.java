@@ -67,6 +67,7 @@ public class RegisterActivity extends AppCompatActivity {
         String email = mEditEmail.getText().toString();
         String senha = mEditSenha.getText().toString();
         String username = mEditUsername.getText().toString();
+
         if( username == null || username.isEmpty() || email == null || email.isEmpty() || senha ==null || senha.isEmpty()){
             Toast.makeText(this, "Nome, senha e e-mail devem ser preenchidos!", Toast.LENGTH_SHORT).show();
             return;

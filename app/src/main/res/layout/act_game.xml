@@ -22,6 +22,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <ImageButton
+        android:id="@+id/btn_opcoes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/down3"
+        app:layout_constraintEnd_toEndOf="@+id/lbl_nome_contato"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_nome_contato" />
     <TextView
         android:id="@+id/lbl_nome_contato"
         style="@style/Quicksand.Bold"
@@ -31,21 +41,27 @@
         android:text="Nome"
         android:textColor="@color/white"
         android:textSize="34sp"
-        app:layout_constraintEnd_toEndOf="@+id/recyclerViewCartas"
-        app:layout_constraintStart_toStartOf="@+id/recyclerViewCartas"
+        app:layout_constraintEnd_toEndOf="@+id/btn_config"
+        app:layout_constraintStart_toStartOf="@+id/btn_voltar_game"
         app:layout_constraintTop_toBottomOf="@id/btn_config" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewCartas"
-        android:layout_width="388dp"
-        android:layout_height="669dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="16dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:paddingBottom="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lbl_nome_contato" />
+        app:layout_constraintEnd_toEndOf="@+id/lbl_nome_contato"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/lbl_nome_contato"
+        app:layout_constraintTop_toBottomOf="@+id/btn_opcoes"
+        app:layout_constraintVertical_bias="1.0" />
 
     <ImageButton
         android:id="@+id/btn_config"
@@ -98,7 +114,7 @@
             android:id="@+id/text_match"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="46dp"
             android:text="MATCH!"
             android:textColor="#FF4081"
             android:textSize="36sp"

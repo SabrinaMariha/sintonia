@@ -8,6 +8,7 @@
     <color name="salmao">#FF5328</color>
     <color name="cinza">#363535</color>
     <color name="cinzaClaro">#98AABA</color>
+    <color name="cinzaClarissimo">#E7E7E7</color>
     <color name="avatar_color_1">#FD297B</color>  <!-- rosa elétrico (cor principal do app) -->
     <color name="avatar_color_2">#FF5864</color>  <!-- rosa suave (combina com rosaEletrico) -->
     <color name="avatar_color_3">#FF655B</color>  <!-- salmão -->
