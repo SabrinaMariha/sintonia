@@ -32,11 +32,12 @@
 
     <TextView
         android:id="@+id/lbl_matches"
+        style="@style/Quicksand.Bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Matches"
         android:textColor="#FAF9F9"
-        android:textSize="26sp" />
+        android:textSize="24sp" />
   </LinearLayout>
 
 

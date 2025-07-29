@@ -95,9 +95,10 @@ public class MinhasCartasActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         db = FirebaseFirestore.getInstance();
-
         carregarCartas();
     }
+
+
 
     private void carregarCartas() {
         listaCartas.clear();

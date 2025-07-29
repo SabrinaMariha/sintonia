@@ -23,7 +23,7 @@
         android:gravity="center_horizontal"
         android:text="Descrição da Carta"
         android:textColor="#FAF9F9"
-        android:textSize="34sp" />
+        android:textSize="28sp" />
 
     <!-- Espaço que empurra os botões para baixo e o TextView para cima -->
     <View

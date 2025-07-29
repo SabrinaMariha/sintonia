@@ -29,7 +29,7 @@
         android:id="@+id/Container_Nova_Carta"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="24dp"
         android:orientation="vertical"
         android:padding="16dp"
         android:paddingTop="16dp"
@@ -65,10 +65,10 @@
             android:background="@drawable/bg_btn_branco"
             android:baselineAligned="false"
             android:orientation="vertical"
+            android:padding="40dp"
             android:paddingLeft="24dp"
             android:paddingRight="24dp"
             android:paddingBottom="24dp"
-            android:padding="40dp"
             android:radius="30dp">
 
             <ImageButton
@@ -77,8 +77,7 @@
                 android:layout_height="34dp"
                 android:layout_gravity="end"
                 android:layout_marginBottom="8dp"
-                android:background="@drawable/trashcan"
-                 />
+                android:background="@drawable/trashcan" />
 
             <EditText
                 android:id="@+id/edit_descricao_nova_carta"
@@ -86,7 +85,8 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/bg_descricao_nova_carta"
                 android:hint="Descreva a carta aqui..."
-                android:maxLength="100"
+                android:inputType="textMultiLine|textCapSentences"
+                android:maxLength="300"
                 android:padding="15dp"
                 android:paddingTop="50dp"
                 android:paddingBottom="50dp"
@@ -97,14 +97,15 @@
 
         <Button
             android:id="@+id/salvar_nova_carta"
+            style="@style/CustomMaterialButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_btn"
-            style="@style/CustomMaterialButton"
+            android:text="Salvar"
             android:textColor="@color/white"
             app:backgroundTint="@null"
-            app:cornerRadius="20dp"
-            android:text="Salvar" />
+            app:cornerRadius="20dp" />
+
     </LinearLayout>
 
     <ImageButton

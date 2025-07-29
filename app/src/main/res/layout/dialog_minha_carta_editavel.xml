@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="300dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_carta_dialog"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:padding="24dp"
-    android:gravity="center_horizontal">
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:padding="24dp">
 
     <ImageButton
         android:id="@+id/btnFechar"
@@ -25,25 +28,31 @@
         android:id="@+id/editDescricaoDetalhe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
         android:hint="Edite a descrição"
+        android:inputType="textMultiLine"
+        android:lineSpacingExtra="8dp"
+        android:maxLines="4"
         android:textColor="#FAF9F9"
         android:textColorHint="#AAAAAA"
-        android:textSize="20sp"
-        android:background="@android:color/transparent"
-        android:inputType="textMultiLine"
-        android:maxLines="4"
-        android:lineSpacingExtra="8dp" />
+        android:textSize="20sp" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="16dp" />
 
-    <ImageButton
-        android:id="@+id/btnSalvar"
-        android:layout_width="wrap_content"
+
+    <Button
+        android:id="@+id/salvar_nova_carta"
+        style="@style/CustomMaterialButton"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#FF4081"
-        android:background="@drawable/bg_home"
-        android:src="@drawable/like"
-        android:contentDescription="Salvar" />
+        android:layout_marginTop="26dp"
+        android:background="@drawable/bg_btn"
+        android:text="Salvar"
+        android:textColor="@color/white"
+        app:backgroundTint="@null"
+        app:cornerRadius="20dp" />
+
+
 </LinearLayout>
