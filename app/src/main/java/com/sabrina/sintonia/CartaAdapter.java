@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -37,6 +38,17 @@ public class CartaAdapter extends RecyclerView.Adapter<CartaAdapter.CartaViewHol
         this.uidDois = uidDois;
         this.nomeContato = nomeContato;
     }
+
+    public interface OnLikeDislikeListener {
+        void onLikeDislike(Carta carta, boolean gostou, int position);
+    }
+
+    private OnLikeDislikeListener listener;
+
+    public void setOnLikeDislikeListener(OnLikeDislikeListener listener) {
+        this.listener = listener;
+    }
+
     @NonNull
     @Override
     public CartaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -74,6 +86,19 @@ public class CartaAdapter extends RecyclerView.Adapter<CartaAdapter.CartaViewHol
                     }
                 }
         );
+        holder.btnLike.setOnClickListener(v -> {
+            handleLikeDislike(holder.getAdapterPosition(), true); // true = like
+        });
+
+        holder.btnDislike.setOnClickListener(v -> {
+            handleLikeDislike(holder.getAdapterPosition(), false); // false = dislike
+        });
+
+    }
+    private void handleLikeDislike(int position, boolean gostou) {
+        if (listener != null && position >= 0 && position < cartas.size()) {
+            listener.onLikeDislike(cartas.get(position), gostou, position);
+        }
     }
 
 
@@ -83,14 +108,18 @@ public class CartaAdapter extends RecyclerView.Adapter<CartaAdapter.CartaViewHol
     }
     @Override
     public int getItemCount() {
-        return Math.min(cartas.size(), 1); // só exibe UMA carta por vez
+        return Math.min(cartas.size(), 1);
     }
 
     static class CartaViewHolder extends RecyclerView.ViewHolder {
         TextView textDescricao;
+        ImageButton btnLike, btnDislike;
+
         public CartaViewHolder(@NonNull View itemView) {
             super(itemView);
             textDescricao = itemView.findViewById(R.id.text_descricao);
+            btnLike = itemView.findViewById(R.id.btn_like);
+            btnDislike = itemView.findViewById(R.id.btn_dislike);
         }
     }
 }

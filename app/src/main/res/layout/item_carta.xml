@@ -36,19 +36,27 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:gravity="center"
+        android:padding="40dp"
         android:orientation="horizontal"> <!-- Adicionado margin bottom aqui -->
 
-        <Button
+        <ImageButton
             android:id="@+id/btn_dislike"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Dislike" />
-
-        <Button
+            android:background="@android:color/transparent"
+            android:src="@drawable/deslike"
+            />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" /> <!-- Este View ocupa todo o espaço restante -->
+        <ImageButton
             android:id="@+id/btn_like"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="Like" />
+            android:background="@android:color/transparent"
+            android:src="@drawable/like"
+        />
+
     </LinearLayout>
 </LinearLayout>

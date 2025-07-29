@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -40,6 +41,7 @@ public class NovaCartaActivity extends AppCompatActivity {
     private ImageButton mImgTrash;
     private ImageButton mImgVoltar;
     private ImageButton btnConfig;
+    private TextView editNomeContato;
     private String nomeContato;
     private String conexaoId;
     private String uidDois;
@@ -57,9 +59,15 @@ public class NovaCartaActivity extends AppCompatActivity {
         });
         // Recupera os extras recebidos da GameActivity
         Intent intent = getIntent();
+        editNomeContato = findViewById(R.id.lbl_nome_contato);
         nomeContato = intent.getStringExtra("NOME_CONTATO");
         conexaoId = intent.getStringExtra("CONEXAO_ID");
         uidDois = intent.getStringExtra("UID_DOIS");
+
+        if (nomeContato != null) {
+            editNomeContato.setText(nomeContato);
+        }
+
         mEditDescricaoNova = findViewById(R.id.edit_descricao_nova_carta);
 
         mBtnSalvarCarta = findViewById(R.id.salvar_nova_carta);

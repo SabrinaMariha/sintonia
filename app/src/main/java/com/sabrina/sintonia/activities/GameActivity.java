@@ -205,36 +205,9 @@ public class GameActivity extends AppCompatActivity {
                                                             "timestamp", System.currentTimeMillis()
                                                     ));
 
-                                            View fundoEscuro = findViewById(R.id.fundo_escuro);
-                                            LinearLayout matchContainer = findViewById(R.id.match_container);
-                                            ImageView heart = findViewById(R.id.heart_match);
-                                            TextView textMatch = findViewById(R.id.text_match);
+                                           animacao();
 
-                                            fundoEscuro.setVisibility(View.VISIBLE);
-                                            matchContainer.setVisibility(View.VISIBLE);
 
-                                            ScaleAnimation scaleHeart = new ScaleAnimation(
-                                                    0f, 1.5f, 0f, 1.5f,
-                                                    Animation.RELATIVE_TO_SELF, 0.5f,
-                                                    Animation.RELATIVE_TO_SELF, 0.5f);
-                                            scaleHeart.setDuration(500);
-                                            scaleHeart.setFillAfter(true);
-
-                                            AlphaAnimation fadeInText = new AlphaAnimation(0.0f, 1.0f);
-                                            fadeInText.setDuration(500);
-                                            fadeInText.setStartOffset(300);
-
-                                            heart.startAnimation(scaleHeart);
-                                            textMatch.startAnimation(fadeInText);
-                                            recyclerView.setVisibility(View.INVISIBLE);
-
-                                            new android.os.Handler().postDelayed(() -> {
-                                                heart.clearAnimation();
-                                                textMatch.clearAnimation();
-                                                matchContainer.setVisibility(View.GONE);
-                                                fundoEscuro.setVisibility(View.GONE);
-                                                recyclerView.setVisibility(View.VISIBLE);
-                                            }, 2000);
 
                                             Toast.makeText(getApplicationContext(), "✨ MATCH! ✨", Toast.LENGTH_LONG).show();
                                         }
@@ -251,6 +224,38 @@ public class GameActivity extends AppCompatActivity {
         };
 
         new ItemTouchHelper(simpleCallback).attachToRecyclerView(recyclerView);
+    }
+
+    private void animacao() {
+        View fundoEscuro = findViewById(R.id.fundo_escuro);
+        LinearLayout matchContainer = findViewById(R.id.match_container);
+        ImageView heart = findViewById(R.id.heart_match);
+        TextView textMatch = findViewById(R.id.text_match);
+
+        fundoEscuro.setVisibility(View.VISIBLE);
+        matchContainer.setVisibility(View.VISIBLE);
+
+        ScaleAnimation scaleHeart = new ScaleAnimation(
+                0f, 1.5f, 0f, 1.5f,
+                Animation.RELATIVE_TO_SELF, 0.5f,
+                Animation.RELATIVE_TO_SELF, 0.5f);
+        scaleHeart.setDuration(500);
+        scaleHeart.setFillAfter(true);
+
+        AlphaAnimation fadeInText = new AlphaAnimation(0.0f, 1.0f);
+        fadeInText.setDuration(500);
+        fadeInText.setStartOffset(300);
+
+        heart.startAnimation(scaleHeart);
+        textMatch.startAnimation(fadeInText);
+        recyclerView.setVisibility(View.INVISIBLE);
+        new android.os.Handler().postDelayed(() -> {
+            heart.clearAnimation();
+            textMatch.clearAnimation();
+            matchContainer.setVisibility(View.GONE);
+            fundoEscuro.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+        }, 2000);
     }
 
     private void carregarMontanteFiltrado(List<String> cartasJaVistas) {
@@ -285,6 +290,7 @@ public class GameActivity extends AppCompatActivity {
 
                         cartaAdapter = new CartaAdapter(listaCartas, conexaoId, outroUid, nomeContato);
                         recyclerView.setAdapter(cartaAdapter);
+                        configurarListenerBotoes();
                     } else {
                         Toast.makeText(this, "Conexão não encontrada", Toast.LENGTH_SHORT).show();
                     }
@@ -294,4 +300,55 @@ public class GameActivity extends AppCompatActivity {
                     e.printStackTrace();
                 });
     }
+
+    private void configurarListenerBotoes() {
+        cartaAdapter.setOnLikeDislikeListener((carta, gostou, position) -> {
+            String cartaId = carta.getid();
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            DocumentReference interacaoRef = db
+                    .collection("interacoes")
+                    .document(conexaoId)
+                    .collection("cartas")
+                    .document(cartaId);
+
+            Map<String, Object> update = new HashMap<>();
+            update.put(meuUid, gostou);
+
+            interacaoRef.set(update, SetOptions.merge())
+                    .addOnSuccessListener(unused -> {
+                        if (gostou) {
+                            interacaoRef.get().addOnSuccessListener(doc -> {
+                                Map<String, Object> data = doc.getData();
+                                if (data != null) {
+                                    Boolean likeMeu = (Boolean) data.get(meuUid);
+                                    Boolean likeOutro = (Boolean) data.get(outroUid);
+
+                                    if (Boolean.TRUE.equals(likeMeu) && Boolean.TRUE.equals(likeOutro)) {
+                                        // Salvando match no Firestore
+                                        db.collection("matches")
+                                                .document(conexaoId)
+                                                .collection("cartas")
+                                                .document(cartaId)
+                                                .set(Map.of(
+                                                        "match", true,
+                                                        "timestamp", System.currentTimeMillis()
+                                                ));
+
+                                        // Mostrando animação de match
+                                        animacao();
+                                        Toast.makeText(getApplicationContext(), "✨ MATCH! ✨", Toast.LENGTH_LONG).show();
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), "Like!", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Dislike!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+            cartaAdapter.removeItem(position);
+        });
+    }
+
 }
