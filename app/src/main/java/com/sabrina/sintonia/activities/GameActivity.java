@@ -85,7 +85,14 @@ public class GameActivity extends AppCompatActivity {
                     intent.putExtra("NOME_CONTATO", nomeContato);
                     startActivity(intent);
                     return true;
-                }
+                } else if (id == R.id.menu_minhas_cartas) {
+                Intent intent = new Intent(GameActivity.this, MinhasCartasActivity.class);
+                intent.putExtra("CONEXAO_ID", conexaoId);
+                intent.putExtra("UID_DOIS", outroUid);
+                intent.putExtra("NOME_CONTATO", nomeContato);
+                startActivity(intent);
+                return true;
+            }
                 return false;
             });
 
@@ -170,7 +177,7 @@ public class GameActivity extends AppCompatActivity {
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 int position = viewHolder.getAdapterPosition();
                 Carta carta = listaCartas.get(position);
-                String cartaId = carta.getid();
+                String cartaId = carta.getId();
 
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 DocumentReference interacaoRef = db
@@ -303,7 +310,7 @@ public class GameActivity extends AppCompatActivity {
 
     private void configurarListenerBotoes() {
         cartaAdapter.setOnLikeDislikeListener((carta, gostou, position) -> {
-            String cartaId = carta.getid();
+            String cartaId = carta.getId();
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             DocumentReference interacaoRef = db
                     .collection("interacoes")

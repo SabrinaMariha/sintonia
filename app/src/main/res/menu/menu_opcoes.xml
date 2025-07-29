@@ -6,4 +6,7 @@
     <item
         android:id="@+id/menu_ver_matches"
         android:title="Ver matches" />
+    <item
+        android:id="@+id/menu_minhas_cartas"
+        android:title="Minhas Cartas" />
 </menu>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/material_dynamic_neutral0"
+    tools:context=".activities.MatchesActivity">
+
+    <!-- Cabeçalho: ícone + texto -->
+
+    <!-- Botão de configurações -->
+
+    <LinearLayout
+        android:id="@+id/container_minhas_cartas"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="@+id/btn_voltar_minhas_cartas"
+        app:layout_constraintTop_toBottomOf="@+id/btn_voltar_minhas_cartas">
+
+
+        <ImageButton
+            android:id="@+id/trash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/heartrosa" />
+
+        <TextView
+            android:id="@+id/lbl_minhas_cartas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Minhas cartas"
+            android:textColor="#FAF9F9"
+            android:textSize="26sp" />
+    </LinearLayout>
+
+
+    <ImageButton
+        android:id="@+id/btn_config"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/gear_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- RecyclerView corrigida -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewMinhasCartas"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="42dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btn_config"
+        app:layout_constraintStart_toStartOf="@+id/container_minhas_cartas"
+        app:layout_constraintTop_toBottomOf="@+id/container_minhas_cartas" />
+
+    <ImageButton
+        android:id="@+id/btn_voltar_minhas_cartas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/down_left_1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/btn_config_minhas_cartas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/gear_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

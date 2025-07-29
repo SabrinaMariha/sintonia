@@ -11,9 +11,7 @@ public class Carta {
         this.descricao = descricao;
     }
 
-    public String getid() {
-        return id;
-    }
+
     public void setId(String id) {
         this.id = id;
     }
@@ -31,5 +29,9 @@ public class Carta {
     }
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public String getId() {
+        return id;
     }
 }
