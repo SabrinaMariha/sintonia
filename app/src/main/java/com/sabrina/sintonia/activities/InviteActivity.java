@@ -69,7 +69,7 @@ public class InviteActivity extends AppCompatActivity implements ConviteAdapter.
             popupMenu.setOnMenuItemClickListener(item -> {
                 int id = item.getItemId();
                 if (id == R.id.menu_perfil) {
-                    Toast.makeText(InviteActivity.this, "Perfil selecionado", Toast.LENGTH_SHORT).show();
+                    Redirect.changeScreen(InviteActivity.this, PerfilActivity.class);
                     return true;
                 } else if (id == R.id.menu_logout) {
                     FirebaseAuth.getInstance().signOut();

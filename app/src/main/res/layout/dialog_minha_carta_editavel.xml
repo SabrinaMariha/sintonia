@@ -45,6 +45,7 @@
         android:hint="Edite a descrição"
         android:inputType="textMultiLine"
         android:lineSpacingExtra="8dp"
+        android:maxLength="120"
         android:maxLines="4"
         android:textColor="#FAF9F9"
         android:textColorHint="#AAAAAA"

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/material_dynamic_neutral0"
+    tools:context=".activities.PerfilActivity">
+
+    <ImageButton
+        android:id="@+id/btn_voltar_perfil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/down_left_1"
+        android:contentDescription="Voltar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/lbl_edit_profile"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Edite o nome do seu perfil"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintTop_toBottomOf="@+id/btn_voltar_perfil"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <EditText
+        android:id="@+id/edit_nome_perfil"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/bg_edittext"
+        android:hint="Digite seu nome"
+        android:inputType="textPersonName"
+        android:textColor="@color/white"
+        android:textColorHint="@color/cinzaClaro"
+        android:textSize="20sp"
+        android:padding="12dp"
+        android:maxLength="40"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_edit_profile"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_salvar_nome"
+        style="@style/CustomMaterialButton"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        android:text="Salvar"
+        android:textColor="@color/white"
+        android:background="@drawable/bg_btn"
+        app:backgroundTint="@null"
+        app:cornerRadius="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/edit_nome_perfil"
+        app:layout_constraintStart_toStartOf="@+id/edit_nome_perfil"
+        app:layout_constraintEnd_toEndOf="@+id/edit_nome_perfil" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

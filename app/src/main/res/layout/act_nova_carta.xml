@@ -112,7 +112,7 @@
                 android:background="@drawable/bg_descricao_nova_carta"
                 android:hint="Descreva a carta aqui..."
                 android:inputType="textMultiLine|textCapSentences"
-                android:maxLength="300"
+                android:maxLength="120"
                 android:padding="15dp"
                 android:textColor="@color/black"
                 android:textSize="20sp"

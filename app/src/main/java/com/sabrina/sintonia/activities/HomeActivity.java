@@ -53,6 +53,8 @@ protected void onCreate(Bundle savedInstanceState) {
         v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
         return insets;
     });
+
+
     btnConfig = findViewById(R.id.btn_config);
     btnConfig.setOnClickListener(view -> {
         PopupMenu popupMenu = new PopupMenu(HomeActivity.this, btnConfig);
@@ -61,7 +63,7 @@ protected void onCreate(Bundle savedInstanceState) {
         popupMenu.setOnMenuItemClickListener(item -> {
             int id = item.getItemId();
             if (id == R.id.menu_perfil) {
-                Toast.makeText(HomeActivity.this, "Perfil selecionado", Toast.LENGTH_SHORT).show();
+                Redirect.changeScreen(HomeActivity.this, PerfilActivity.class);
                 return true;
             } else if (id == R.id.menu_logout) {
                 FirebaseAuth.getInstance().signOut();

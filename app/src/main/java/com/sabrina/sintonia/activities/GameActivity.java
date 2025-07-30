@@ -111,7 +111,7 @@ public class GameActivity extends AppCompatActivity {
             popupMenu.setOnMenuItemClickListener(item -> {
                 int id = item.getItemId();
                 if (id == R.id.menu_perfil) {
-                    Toast.makeText(GameActivity.this, "Perfil selecionado", Toast.LENGTH_SHORT).show();
+                    Redirect.changeScreen(GameActivity.this, PerfilActivity.class);
                     return true;
                 } else if (id == R.id.menu_logout) {
                     FirebaseAuth.getInstance().signOut();
@@ -262,7 +262,7 @@ public class GameActivity extends AppCompatActivity {
             matchContainer.setVisibility(View.GONE);
             fundoEscuro.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
-        }, 2000);
+        }, 1000);
     }
 
     private void carregarMontanteFiltrado(List<String> cartasJaVistas) {

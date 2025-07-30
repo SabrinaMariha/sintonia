@@ -89,7 +89,7 @@ public class NovaCartaActivity extends AppCompatActivity {
             popupMenu.setOnMenuItemClickListener(item -> {
                 int id = item.getItemId();
                 if (id == R.id.menu_perfil) {
-                    Toast.makeText(NovaCartaActivity.this, "Perfil selecionado", Toast.LENGTH_SHORT).show();
+                    Redirect.changeScreen(NovaCartaActivity.this, PerfilActivity.class);
                     return true;
                 } else if (id == R.id.menu_logout) {
                     FirebaseAuth.getInstance().signOut();
