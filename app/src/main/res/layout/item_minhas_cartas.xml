@@ -21,18 +21,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_carta"
-            android:orientation="vertical"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
             android:padding="30dp">
 
             <TextView
                 android:id="@+id/text_descricao_match"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="Descrição da Carta"
                 android:textColor="#FAF9F9"
                 android:textSize="24sp" />
+
+            <ImageButton
+                android:id="@+id/trashMinhaCarta"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_marginStart="12dp"
+                android:background="@drawable/trashcan"
+                android:contentDescription="Excluir" />
         </LinearLayout>
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

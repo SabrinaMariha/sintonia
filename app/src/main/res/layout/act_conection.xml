@@ -99,13 +99,13 @@
 
     <TextView
         android:id="@+id/lbl_seu_codigo"
+        style="@style/Quicksand"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:text="Seu código para convite é"
-        style="@style/Quicksand"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/Input_codigo"
         app:layout_constraintStart_toStartOf="@+id/Input_codigo"
         app:layout_constraintTop_toBottomOf="@+id/btn_convidar" />
 
@@ -121,8 +121,8 @@
         android:textColor="@color/white"
         app:backgroundTint="@null"
         app:cornerRadius="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/Input_codigo"
+        app:layout_constraintStart_toStartOf="@+id/Input_codigo"
         app:layout_constraintTop_toBottomOf="@+id/Input_codigo" />
 
     <Button

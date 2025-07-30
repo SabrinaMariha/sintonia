@@ -22,7 +22,6 @@
       app:layout_constraintStart_toStartOf="@+id/btn_voltar_macthes"
       app:layout_constraintTop_toBottomOf="@+id/btn_voltar_macthes">
 
-
     <ImageButton
         android:id="@+id/trash"
         android:layout_width="wrap_content"

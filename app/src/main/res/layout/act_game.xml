@@ -50,6 +50,7 @@
         android:id="@+id/recyclerViewCartas"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:clipChildren="false"
         android:clipToPadding="false"

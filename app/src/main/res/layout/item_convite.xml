@@ -39,17 +39,17 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_recusar"
+        style="@style/CustomMaterialButton"
         android:layout_width="127dp"
         android:layout_height="44dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/bg_btn_decline"
         android:text="RECUSAR"
-        style="@style/CustomMaterialButton"
 
         android:textColor="@color/white"
         app:backgroundTint="@null"
         app:cornerRadius="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/textViewNome"
         app:layout_constraintTop_toBottomOf="@+id/textViewNome" />
 
     <!-- Linha branca de separação -->
@@ -59,8 +59,8 @@
         android:layout_height="1dp"
         android:layout_marginTop="16dp"
         android:background="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/textViewNome"
+        app:layout_constraintStart_toStartOf="@+id/textViewNome"
         app:layout_constraintTop_toBottomOf="@+id/btn_recusar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

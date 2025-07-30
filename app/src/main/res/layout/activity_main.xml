@@ -8,40 +8,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.MainActivity">
-
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_entrar"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="50dp"
-        android:background="@drawable/bg_btn_branco"
-        android:text="Entrar"
-        style="@style/CustomMaterialButton"
-        android:textColor="@color/black"
-        app:backgroundTint="@null"
-        app:cornerRadius="20dp"
-        app:layout_constraintEnd_toEndOf="@+id/Input_seu_codigo"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/Input_seu_codigo"
-        app:layout_constraintTop_toBottomOf="@+id/Input_seu_codigo" />
-
-    <TextView
-        android:id="@+id/lbl_account"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:background="@drawable/bg_textview"
-        android:text="@string/signIn"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/btn_entrar"
-        app:layout_constraintHorizontal_bias="0.58"
-        app:layout_constraintStart_toStartOf="@+id/btn_entrar"
-        app:layout_constraintTop_toBottomOf="@+id/btn_entrar" />
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="153dp"
+        android:layout_height="177dp"
+        android:layout_marginTop="168dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo_sintonia" />
 
     <EditText
-        android:id="@+id/Input_codigo"
+        android:id="@+id/email"
         style="@style/Quicksand"
         android:layout_width="0dp"
         android:layout_height="45dp"
@@ -59,11 +37,10 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
     <EditText
-        android:id="@+id/Input_seu_codigo"
+        android:id="@+id/senha"
         style="@style/Quicksand"
-        android:layout_width="377dp"
+        android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_marginTop="12dp"
         android:background="@drawable/bg_edittext"
@@ -73,18 +50,42 @@
         android:textColor="@color/white"
         android:textColorHint="@color/white"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/Input_codigo"
+        app:layout_constraintStart_toStartOf="@+id/email"
+        app:layout_constraintEnd_toEndOf="@+id/email"
+        app:layout_constraintTop_toBottomOf="@+id/email" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_entrar"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/bg_btn_branco"
+        android:text="Entrar"
+        style="@style/CustomMaterialButton"
+        android:textColor="@color/black"
+        app:backgroundTint="@null"
+        app:cornerRadius="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/senha"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/Input_codigo"
-        app:layout_constraintTop_toBottomOf="@+id/Input_codigo" />
+        app:layout_constraintStart_toStartOf="@+id/senha"
+        app:layout_constraintTop_toBottomOf="@+id/senha" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="153dp"
-        android:layout_height="177dp"
-        android:layout_marginTop="168dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo_sintonia" />
+    <TextView
+        android:id="@+id/lbl_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/bg_textview"
+        android:text="@string/signIn"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/btn_entrar"
+        app:layout_constraintHorizontal_bias="0.58"
+        app:layout_constraintStart_toStartOf="@+id/btn_entrar"
+        app:layout_constraintTop_toBottomOf="@+id/btn_entrar" />
+
+
+
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

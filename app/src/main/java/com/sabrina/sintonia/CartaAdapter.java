@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
+import android.graphics.drawable.Drawable;
 import android.text.TextPaint;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sabrina.sintonia.activities.GameActivity;
@@ -31,6 +33,13 @@ public class CartaAdapter extends RecyclerView.Adapter<CartaAdapter.CartaViewHol
     private String conexaoId;
     private String uidDois;
     private String nomeContato;
+
+    private final int[] fundoCartaColors = {
+            R.color.fundo_carta_color_1,
+            R.color.fundo_carta_color_2,
+            R.color.fundo_carta_color_3,
+            R.color.fundo_carta_color_4,
+    };
 
     public CartaAdapter(List<Carta> cartas, String conexaoId, String uidDois, String nomeContato) {
         this.cartas = cartas;
@@ -62,7 +71,38 @@ public class CartaAdapter extends RecyclerView.Adapter<CartaAdapter.CartaViewHol
         Carta carta = cartas.get(position);
         holder.textDescricao.setText(carta.getDescricao());
         // Aqui o clique no botão opções dentro de cada carta:
+        // 🌈 Aplica cor de fundo aleatória ao layout da carta
+        int corResId = fundoCartaColors[new java.util.Random().nextInt(fundoCartaColors.length)];
+        int cor = holder.itemView.getContext().getResources().getColor(corResId);
+        Drawable drawable = ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.bg_carta);
+        if (drawable != null) {
+            drawable = drawable.mutate(); // Evita aplicar a cor em todos os usos do drawable
+            drawable.setTint(cor);
+            holder.layoutDescricao.setBackground(drawable);
+        }
 
+        // 🎨 Aplica gradiente ao texto
+        holder.textDescricao.getViewTreeObserver().addOnGlobalLayoutListener(
+                new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        holder.textDescricao.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                        TextPaint paint = holder.textDescricao.getPaint();
+                        Shader shader = new LinearGradient(
+                                0, 0, holder.textDescricao.getHeight(), 0,
+                                new int[]{
+                                        Color.parseColor("#C20853"),
+                                        Color.parseColor("#E02E3E"),
+                                        Color.parseColor("#FF5328")
+                                },
+                                null,
+                                Shader.TileMode.CLAMP
+                        );
+                        paint.setShader(shader);
+                        holder.textDescricao.invalidate();
+                    }
+                }
+        );
         // Aplica o gradiente depois que a view for desenhada
         holder.textDescricao.getViewTreeObserver().addOnGlobalLayoutListener(
                 new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -114,12 +154,13 @@ public class CartaAdapter extends RecyclerView.Adapter<CartaAdapter.CartaViewHol
     static class CartaViewHolder extends RecyclerView.ViewHolder {
         TextView textDescricao;
         ImageButton btnLike, btnDislike;
-
+        View layoutDescricao;
         public CartaViewHolder(@NonNull View itemView) {
             super(itemView);
             textDescricao = itemView.findViewById(R.id.text_descricao);
             btnLike = itemView.findViewById(R.id.btn_like);
             btnDislike = itemView.findViewById(R.id.btn_dislike);
+            layoutDescricao = itemView.findViewById(R.id.layout_descricao);
         }
     }
 }

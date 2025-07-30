@@ -120,11 +120,8 @@ public class InviteActivity extends AppCompatActivity implements ConviteAdapter.
                                         Conexao conexao = new Conexao(usuarioUm, usuarioDois);
                                         conexao.setMontante(montante);
                                         String conexaoId;
-                                        if (usuarioUm.getUuid().compareTo(usuarioDois.getUuid()) < 0) {
-                                            conexaoId = usuarioUm.getUuid() + "_" + usuarioDois.getUuid();
-                                        } else {
-                                            conexaoId = usuarioDois.getUuid() + "_" + usuarioUm.getUuid();
-                                        }
+                                        conexaoId = gerarChaveConexao(usuarioUm.getUuid(), usuarioDois.getUuid());
+
                                         db.collection("conexoes")
                                                 .document(conexaoId) // <-- define o ID customizado
                                                 .set(conexao)        // <-- envia o objeto Conexao
@@ -156,7 +153,9 @@ public class InviteActivity extends AppCompatActivity implements ConviteAdapter.
                         Toast.makeText(this, "Erro ao recusar convite", Toast.LENGTH_SHORT).show());
         carregarConvites();
     }
-
+    private String gerarChaveConexao(String uid1, String uid2) {
+        return (uid1.compareTo(uid2) < 0) ? uid1 + "_" + uid2 : uid2 + "_" + uid1;
+    }
     private void carregarConvites() {
         listaConvites.clear();
 

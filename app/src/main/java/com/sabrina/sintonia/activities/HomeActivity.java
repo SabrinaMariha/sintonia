@@ -163,11 +163,8 @@ private void abrirDialogAdicionarAmigo() {
         // Gera o conexaoId de forma ordenada para evitar duplicatas
         String outroUid = usuario.getUuid();
         String conexaoId;
-        if (meuUid.compareTo(outroUid) < 0) {
-            conexaoId = meuUid + "_" + outroUid;
-        } else {
-            conexaoId = outroUid + "_" + meuUid;
-        }
+        conexaoId = gerarChaveConexao(meuUid, outroUid);
+
 
         Intent intent = new Intent(this, GameActivity.class);
         intent.putExtra("NOME_CONTATO", usuario.getUserName());
@@ -176,5 +173,9 @@ private void abrirDialogAdicionarAmigo() {
         intent.putExtra("UID_DOIS", outroUid);
         startActivity(intent);
     }
+    private String gerarChaveConexao(String uid1, String uid2) {
+        return (uid1.compareTo(uid2) < 0) ? uid1 + "_" + uid2 : uid2 + "_" + uid1;
+    }
+
 
 }

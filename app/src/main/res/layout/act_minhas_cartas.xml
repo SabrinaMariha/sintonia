@@ -22,7 +22,6 @@
         app:layout_constraintStart_toStartOf="@+id/btn_voltar_minhas_cartas"
         app:layout_constraintTop_toBottomOf="@+id/btn_voltar_minhas_cartas">
 
-
         <ImageButton
             android:id="@+id/trash"
             android:layout_width="wrap_content"

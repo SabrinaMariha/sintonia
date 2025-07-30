@@ -2,6 +2,7 @@ package com.sabrina.sintonia;
 
 import android.app.Dialog;
 import android.content.res.Resources;
+import android.os.Build;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.sabrina.sintonia.models.Carta;
 
@@ -112,7 +114,57 @@ public class MinhasCartasAdapter extends RecyclerView.Adapter<MinhasCartasAdapte
             dialog.getWindow().setAttributes(layoutParams);
             dialog.show();
         });
+
+        holder.btnTrashMinhaCarta.setOnClickListener(v -> {
+            excluirCarta(carta.getId(), conexaoId, holder.getAdapterPosition(), v);
+        });
     }
+
+    private void excluirCarta(String idCarta, String conexaoId, int position, View view) {
+        // Mostrar diálogo de confirmação
+        new android.app.AlertDialog.Builder(view.getContext())
+                .setTitle("Confirmar exclusão")
+                .setMessage("Tem certeza de que deseja excluir esta carta?")
+                .setPositiveButton("Sim", (dialog, which) -> {
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    DocumentReference conexaoRef = db.collection("conexoes").document(conexaoId);
+
+                    conexaoRef.get().addOnSuccessListener(docSnapshot -> {
+                        if (docSnapshot.exists()) {
+                            List<Map<String, Object>> cartasMontante =
+                                    (List<Map<String, Object>>) docSnapshot.get("montante.cartas");
+
+                            if (cartasMontante != null) {
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                    cartasMontante.removeIf(cartaMap ->
+                                            idCarta.equals(cartaMap.get("id")));
+                                }
+
+                                conexaoRef.update("montante.cartas", cartasMontante)
+                                        .addOnSuccessListener(aVoid -> {
+                                            listaCartas.remove(position);
+                                            notifyItemRemoved(position);
+                                            notifyItemRangeChanged(position, listaCartas.size());
+                                            Toast.makeText(view.getContext(), "Carta excluída com sucesso", Toast.LENGTH_SHORT).show();
+                                            limparInteracoes(idCarta, conexaoId, view);
+                                        })
+                                        .addOnFailureListener(e -> {
+                                            Toast.makeText(view.getContext(), "Erro ao atualizar montante", Toast.LENGTH_SHORT).show();
+                                            e.printStackTrace();
+                                        });
+                            }
+                        }
+                    }).addOnFailureListener(e -> {
+                        Toast.makeText(view.getContext(), "Erro ao acessar conexão", Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
+                    });
+                })
+                .setNegativeButton("Cancelar", (dialog, which) -> {
+                    dialog.dismiss();
+                })
+                .show();
+    }
+
 
     private void limparInteracoes(String cartaId, String conexaoId, View view) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -122,10 +174,10 @@ public class MinhasCartasAdapter extends RecyclerView.Adapter<MinhasCartasAdapte
                 .document(cartaId)
                 .delete()
                 .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(view.getContext(), "Interações da carta foram apagadas", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(), "A carta retornou ao montante de vocês!", Toast.LENGTH_SHORT).show();
                 })
                 .addOnFailureListener(e -> {
-                    Toast.makeText(view.getContext(), "Erro ao apagar interações", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(), "Erro inesperado ao voltar a carta ao montante", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 });
     }
@@ -139,10 +191,12 @@ public class MinhasCartasAdapter extends RecyclerView.Adapter<MinhasCartasAdapte
 
     public static class MinhasCartasViewHolder extends RecyclerView.ViewHolder {
         TextView textDescricaoMatch;
+        ImageButton btnTrashMinhaCarta;
 
         public MinhasCartasViewHolder(@NonNull View itemView) {
             super(itemView);
             textDescricaoMatch = itemView.findViewById(R.id.text_descricao_match);
+            btnTrashMinhaCarta = itemView.findViewById(R.id.trashMinhaCarta);
         }
     }
 }

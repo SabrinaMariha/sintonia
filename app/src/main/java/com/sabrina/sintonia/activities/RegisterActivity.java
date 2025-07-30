@@ -29,6 +29,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText mEditEmail;
     private EditText mEditUsername;
     private EditText mEditSenha;
+    private EditText mEditConfirmacaoSenha;
     private Button mBtnCadastrar;
     private ImageButton imgVoltar;
     @Override
@@ -42,8 +43,10 @@ public class RegisterActivity extends AppCompatActivity {
             return insets;
         });
         mEditUsername = findViewById(R.id.Input_username);
-        mEditEmail = findViewById(R.id.Input_codigo);
-        mEditSenha = findViewById(R.id.Input_seu_codigo);
+        mEditEmail = findViewById(R.id.email_register);
+        mEditSenha = findViewById(R.id.senha_register);
+        mEditConfirmacaoSenha = findViewById(R.id.confirmacao_senha);
+
         mBtnCadastrar = findViewById(R.id.btn_cadastrar);
 
         imgVoltar = findViewById(R.id.btn_voltar_game);
@@ -57,10 +60,22 @@ public class RegisterActivity extends AppCompatActivity {
         mBtnCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createUser();            }
+                verificaSenha();
+            }
         });
     }
 
+    private void verificaSenha() {
+        String senha = mEditSenha.getText().toString();
+        String senhaConfirmacao = mEditConfirmacaoSenha.getText().toString();
+        if(!senha.equals(senhaConfirmacao)){
+            Toast.makeText(this, "As senhas não coincidem!", Toast.LENGTH_SHORT).show();
+            return;
+        }else {
+            createUser();
+        }
+
+    }
 
 
     private void createUser() {

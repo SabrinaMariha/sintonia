@@ -26,7 +26,7 @@ public class Montante {
     public static void carregarCartasPadrao(OnCartasCarregadasListener listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("cartas")
-                .whereEqualTo("criador", "padrao")
+                .whereEqualTo("criadorId", "padrao")
                 .get()
                 .addOnSuccessListener(querySnapshot -> {
                     List<Carta> cartasCarregadas = new ArrayList<>();

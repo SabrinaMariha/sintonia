@@ -9,6 +9,32 @@
     android:background="@color/material_dynamic_neutral0"
     tools:context=".activities.RegisterActivity">
 
+    <ImageButton
+        android:id="@+id/btn_voltar_game"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/down_left_1"
+        android:text=""
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/lbl_cadastro"
+        style="@style/Quicksand.Bold"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="42dp"
+        android:layout_marginEnd="16dp"
+        android:text="Cadastro"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_voltar_game" />
+
     <EditText
         android:id="@+id/Input_username"
         android:layout_width="0dp"
@@ -20,12 +46,12 @@
         android:inputType="text"
         android:textColor="@color/white"
         android:textColorHint="@color/cinzaClaro"
-        app:layout_constraintEnd_toEndOf="@+id/lbl_nome_contato"
-        app:layout_constraintStart_toStartOf="@+id/lbl_nome_contato"
-        app:layout_constraintTop_toBottomOf="@+id/lbl_nome_contato" />
+        app:layout_constraintEnd_toEndOf="@+id/lbl_cadastro"
+        app:layout_constraintStart_toStartOf="@+id/lbl_cadastro"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_cadastro" />
 
     <EditText
-        android:id="@+id/Input_codigo"
+        android:id="@+id/email_register"
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_marginTop="16dp"
@@ -40,8 +66,8 @@
         app:layout_constraintTop_toBottomOf="@+id/Input_username" />
 
     <EditText
-        android:id="@+id/Input_seu_codigo"
-        android:layout_width="377dp"
+        android:id="@+id/senha_register"
+        android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/bg_edittext"
@@ -50,51 +76,43 @@
         android:inputType="textPassword"
         android:textColor="@color/white"
         android:textColorHint="@color/cinzaClaro"
-        app:layout_constraintEnd_toEndOf="@+id/Input_codigo"
-        app:layout_constraintStart_toStartOf="@+id/Input_codigo"
-        app:layout_constraintTop_toBottomOf="@+id/Input_codigo" />
+        app:layout_constraintEnd_toEndOf="@+id/email_register"
+        app:layout_constraintStart_toStartOf="@+id/email_register"
+        app:layout_constraintTop_toBottomOf="@+id/email_register" />
 
+
+    <EditText
+        android:id="@+id/confirmacao_senha"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_edittext"
+        android:ems="10"
+        android:hint="Repita a senha aqui"
+        android:inputType="textPassword"
+        android:textColor="@color/white"
+        android:textColorHint="@color/cinzaClaro"
+        app:layout_constraintEnd_toEndOf="@+id/senha_register"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/senha_register"
+        app:layout_constraintTop_toBottomOf="@+id/senha_register" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_cadastrar"
         style="@style/CustomMaterialButton"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/bg_home"
         android:text="@string/insert"
         android:textColor="@color/white"
         app:backgroundTint="@null"
         app:cornerRadius="20dp"
-        app:layout_constraintEnd_toEndOf="@+id/Input_seu_codigo"
+        app:layout_constraintEnd_toEndOf="@+id/confirmacao_senha"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/Input_seu_codigo"
-        app:layout_constraintTop_toBottomOf="@+id/Input_seu_codigo" />
+        app:layout_constraintStart_toStartOf="@+id/confirmacao_senha"
+        app:layout_constraintTop_toBottomOf="@+id/confirmacao_senha" />
 
 
-    <TextView
-        android:id="@+id/lbl_nome_contato"
-        style="@style/Quicksand.Bold"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="42dp"
-        android:layout_marginEnd="16dp"
-        android:text="Cadastro"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/btn_voltar_game"
-        app:layout_constraintTop_toBottomOf="@+id/btn_voltar_game" />
 
-    <ImageButton
-        android:id="@+id/btn_voltar_game"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:background="@android:color/transparent"
-        android:src="@drawable/down_left_1"
-        android:text=""
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
