@@ -34,6 +34,7 @@ import com.sabrina.sintonia.Redirect;
 import com.sabrina.sintonia.models.Carta;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -278,6 +279,9 @@ public class GameActivity extends AppCompatActivity {
                         if (montanteMap != null) {
                             List<Map<String, Object>> cartasMap = (List<Map<String, Object>>) montanteMap.get("cartas");
                             if (cartasMap != null) {
+
+                                List<Carta> cartasNaoVistas = new ArrayList<>();
+
                                 for (Map<String, Object> cartaMap : cartasMap) {
                                     String cartaId = (String) cartaMap.get("id");
 
@@ -288,10 +292,17 @@ public class GameActivity extends AppCompatActivity {
                                         carta.setId(cartaId);
                                         carta.setDescricao((String) cartaMap.get("descricao"));
                                         carta.setCriadorId((String) cartaMap.get("criadorId"));
-                                        listaCartas.add(carta);
+                                        cartasNaoVistas.add(carta);
                                     }
-
                                 }
+
+                                Collections.shuffle(cartasNaoVistas);
+
+                                listaCartas.clear();
+                                listaCartas.addAll(cartasNaoVistas);
+
+
+
                             }
                         }
 
@@ -340,8 +351,6 @@ public class GameActivity extends AppCompatActivity {
                                                         "match", true,
                                                         "timestamp", System.currentTimeMillis()
                                                 ));
-
-                                        // Mostrando animação de match
                                         animacao();
                                         Toast.makeText(getApplicationContext(), "✨ MATCH! ✨", Toast.LENGTH_LONG).show();
                                     } else {

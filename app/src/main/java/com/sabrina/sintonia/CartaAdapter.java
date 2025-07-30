@@ -35,10 +35,13 @@ public class CartaAdapter extends RecyclerView.Adapter<CartaAdapter.CartaViewHol
     private String nomeContato;
 
     private final int[] fundoCartaColors = {
-            R.color.fundo_carta_color_1,
             R.color.fundo_carta_color_2,
             R.color.fundo_carta_color_3,
             R.color.fundo_carta_color_4,
+            R.color.fundo_carta_color_5,
+            R.color.fundo_carta_color_6,
+            R.color.fundo_carta_color_7,
+            R.color.fundo_carta_color_8
     };
 
     public CartaAdapter(List<Carta> cartas, String conexaoId, String uidDois, String nomeContato) {

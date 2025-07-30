@@ -17,12 +17,11 @@
     <color name="avatar_color_6">#B35A4A</color>  <!-- tom terroso suave, próximo do salmão, para variação -->
     <color name="avatar_color_7">#E03E6F</color>  <!-- rosa médio, um pouco mais escuro que o rosaEletrico -->
     <color name="avatar_color_8">#A54F61</color>  <!-- bordô discreto, combina com o rosa -->
-    <color name="fundo_carta_color_1">#FF5864</color>
     <color name="fundo_carta_color_2">#363535</color>
     <color name="fundo_carta_color_3">#7E4A84</color>
     <color name="fundo_carta_color_4">#E03E6F</color>
-    <color name="fundo_carta_color_5">#3A7CA5</color>
-    <color name="fundo_carta_color_6">#4CAF50</color>
+    <color name="fundo_carta_color_5">#1F3A6F</color>
+    <color name="fundo_carta_color_6">#17541B</color>
     <color name="fundo_carta_color_7">#C2185B</color>
     <color name="fundo_carta_color_8">#9C27B0</color>
 
